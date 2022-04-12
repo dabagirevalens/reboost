@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta
+      name="google-signin-client_id"
+      content="172176418369-umb3vceb8cokoo4ud53is0qji4pfg2r3.apps.googleusercontent.com"
+    />
+    <title>Reboost</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+    />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  </head>
+  <body>
+    <h2>Welcome to Reboost!</h2>
+    <div class="signup-connect">
+      <h1>Login with :</h1>
+      <a
+        href="/api/v1/users/signin/facebook"
+        class="btn btn-social btn-facebook"
+        ><i class="fa fa-facebook"></i> Sign in with Facebook</a
+      >
+      <a href="/api/v1/users/signin/github" class="btn btn-social btn-github"
+        ><i class="fa fa-github"></i> Sign in with Github</a
+      >
+      <a href="/api/v1/users/signin/google"
+        ><i class="fa fa-google"></i> Sign in with Google</a
+      >
+      <a
+        href="/api/v1/users/signin/linkedin"
+        class="btn btn-social btn-linkedin"
+        ><i class="fa fa-linkedin"></i> Sign in with Linkedin</a
+      >
+      <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      <a href="#" onclick="signOut();">Sign out</a> -->
+    </div>
+
+    <script>
+      function onSignIn(googleUser) {
+        var id_token = googleUser.getAuthResponse().id_token;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/api/v1/users/signin/google");
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onload = function () {
+          console.log("Signed in as: " + xhr.responseText);
+        };
+        xhr.send(JSON.stringify({ token: id_token }));
+      }
+
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          console.log("User signed out.");
+        });
+      }
+    </script>
+  </body>
+</html>
